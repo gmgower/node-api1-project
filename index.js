@@ -9,11 +9,32 @@ server.listen(8000, () => {
     console.log('=== server listening on port 8000 ===');
 });
 
+server.use(express.json());
+
 server.get('/', (req, res) =>{
     console.log('Testing get')
 
     res.send('hello world...')
 })
+
+// ! POST request to /api/users
+server.post('/api/users', (req, res) => {
+    const userInfo = req.body;
+    console.log('body', userInfo)
+
+    dbUser.insert(userInfo)
+        .then(user => {
+            if(user){
+            res.status(201).json({success: true, user})
+            } else {
+            res.status(400).json({success: false, errorMessage: "Please provide name and bio for the user."})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: "There was an error while saving the user to the database.", err})
+        })
+})
+
 
 // ! GET request to /api/users
 server.get('/api/users', (req, res) => {
@@ -42,3 +63,5 @@ server.get('/api/users/:id', (req, res) => {
             res.status(500).json({err: `The user information could not be retrieved.`, err})
         })
     })
+
+
