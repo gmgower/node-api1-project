@@ -82,3 +82,19 @@ server.put('/api/users/:id', (req, res) => {
         })
 })
 
+// ! DELETE request to /api/users/:id
+server.delete('/api/users/:id', (req, res) => {
+    const {id} = req.params;
+
+    dbUser.remove(id)
+        .then(deleteUser => {
+            if(deleteUser) {
+                res.status(204).end();
+            } else {
+                res.status(404).json({message: `The user with the specified ID ${id} does not exist.`});
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: "The user could not be removed", err})
+        })
+})
