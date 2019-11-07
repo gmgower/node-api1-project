@@ -3,10 +3,14 @@ const express = require('express');
 
 const server = express();
 
+require('dotenv').config()
+
 const dbUser = require('./data/db')
 
-server.listen(8000, () => {
-    console.log('=== server listening on port 8000 ===');
+const port = process.env.PORT;
+
+server.listen(port, () => {
+    console.log(`=== server listening on port http://localhost:${port} ===`);
 });
 
 server.use(express.json());
