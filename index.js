@@ -13,6 +13,7 @@ server.listen(port, () => {
     console.log(`=== server listening on port http://localhost:${port} ===`);
 });
 
+server.use(cors());
 server.use(express.json());
 
 server.get('/', (req, res) =>{
