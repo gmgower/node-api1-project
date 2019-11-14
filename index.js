@@ -3,6 +3,8 @@ require('dotenv').config()
 
 const express = require('express');
 
+const cors = require('cors')
+
 const server = express();
 
 const dbUser = require('./data/db')
@@ -13,8 +15,8 @@ server.listen(port, () => {
     console.log(`=== server listening on port http://localhost:${port} ===`);
 });
 
-server.use(cors());
 server.use(express.json());
+server.use(cors());
 
 server.get('/', (req, res) =>{
     console.log('Testing get')
